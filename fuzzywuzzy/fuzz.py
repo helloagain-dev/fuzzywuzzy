@@ -52,6 +52,8 @@ def partial_ratio(s1, s2):
     #   e.g. shorter = "abcd", longer = XXXbcdeEEE
     #   block = (1,3,3)
     #   best score === ratio("abcd", "Xbcd")
+    best_score = None
+    original_match = ''
     scores = []
     for block in blocks:
         long_start = block[1] - block[0] if (block[1] - block[0]) > 0 else 0
@@ -61,11 +63,14 @@ def partial_ratio(s1, s2):
         m2 = SequenceMatcher(None, shorter, long_substr)
         r = m2.ratio()
         if r > .995:
-            return 100
+            return 100, long_substr
         else:
+            if not best_score or r > best_score:
+                best_score = r
+                original_match = long_substr
             scores.append(r)
 
-    return utils.intr(100 * max(scores))
+    return utils.intr(100 * best_score), original_match
 
 
 ##############################

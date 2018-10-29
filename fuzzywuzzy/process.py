@@ -114,9 +114,9 @@ def extractWithoutOrder(query, choices, processor=default_processor, scorer=defa
         # It's a list; just iterate over it.
         for choice in choices:
             processed = pre_processor(processor(choice))
-            score = scorer(processed_query, processed)
+            score, original_match = scorer(processed_query, processed)
             if score >= score_cutoff:
-                yield (choice, score)
+                yield (choice, score, original_match)
 
 
 def extract(query, choices, processor=default_processor, scorer=default_scorer, limit=5):
