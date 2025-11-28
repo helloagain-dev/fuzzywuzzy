@@ -25,7 +25,8 @@ def ratio(s1, s2):
     s1, s2 = utils.make_type_consistent(s1, s2)
 
     m = SequenceMatcher(None, s1, s2)
-    return utils.intr(100 * m.ratio())
+    # additionally return s2 to align with the adapted behavior of partial_ratio (original_match)
+    return utils.intr(100 * m.ratio()), s2
 
 
 @utils.check_for_none
