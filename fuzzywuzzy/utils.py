@@ -25,7 +25,7 @@ def check_for_equivalence(func):
     @functools.wraps(func)
     def decorator(*args, **kwargs):
         if args[0] == args[1]:
-            return 100
+            return 100, args[0]
         return func(*args, **kwargs)
     return decorator
 
